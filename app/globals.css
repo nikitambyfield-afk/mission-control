@@ -1,0 +1,535 @@
+/* ═══════════════════════════════════════════════════════════
+   Olympia Mission Control — Warm Edition
+   Palette: Cream · Blush · Sage · Rose-Gold · Champagne
+   Aesthetic: Luxury skincare meets mission control
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  /* Warm background system */
+  --bg: #FAF6F1;            /* warm cream */
+  --bg-deep: #F5EFE7;       /* deeper cream */
+  --surface: #FFFFFF;        /* pure white cards */
+  --surface-warm: #FDF8F4;  /* blush-tinted white */
+  --surface-2: #F0E8E0;     /* warm beige */
+
+  /* Text */
+  --ink: #2D2018;            /* warm dark brown (not black) */
+  --ink-soft: #5C4A3F;      /* medium brown */
+  --muted: #9A8B7F;          /* warm grey */
+  --dim: #C4B5A8;            /* light warm grey */
+
+  /* Accents */
+  --accent: #C8856B;         /* terracotta rose */
+  --accent-light: #E8B4A0;   /* blush rose-gold */
+  --accent-deep: #A06650;    /* deep terracotta */
+  --gold: #D4A574;           /* champagne gold */
+  --sage: #8BA888;           /* soft sage green */
+  --sage-light: #B5C9B0;     /* light sage */
+  --blush: #F4DDD4;          /* soft blush pink */
+  --plum: #7D5A6E;           /* muted plum for variety */
+
+  /* Status */
+  --good: #6B9E7A;           /* sage good */
+  --hot: #D4736B;            /* coral hot */
+  --wait: #D4A574;           /* champagne wait */
+
+  /* Lines */
+  --line: rgba(157, 133, 120, 0.15);
+  --line-strong: rgba(157, 133, 120, 0.30);
+
+  /* Fonts */
+  --display: var(--font-fraunces), 'Iowan Old Style', Georgia, serif;
+  --ui: var(--font-inter-tight), system-ui, -apple-system, sans-serif;
+  --mono: var(--font-jetbrains), 'SF Mono', Consolas, monospace;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(45, 32, 24, 0.06);
+  --shadow: 0 4px 16px rgba(45, 32, 24, 0.08);
+  --shadow-lg: 0 8px 32px rgba(45, 32, 24, 0.10);
+  --shadow-glow: 0 0 24px rgba(200, 133, 107, 0.15);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--ui);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 0%, rgba(244, 221, 212, 0.5), transparent),
+    radial-gradient(ellipse 50% 50% at 90% 30%, rgba(212, 165, 116, 0.08), transparent),
+    radial-gradient(ellipse 40% 60% at 50% 100%, rgba(139, 168, 136, 0.06), transparent),
+    var(--bg);
+  min-height: 100vh;
+  background-attachment: fixed;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-deep); }
+
+code {
+  font-family: var(--mono);
+  background: var(--surface-2);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--accent-deep);
+}
+
+/* ═══ Layout ════════════════════════════════════════════════ */
+.mc-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* ═══ Sidebar — glass panel ════════════════════════════════ */
+.mc-sidebar {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--line);
+  padding: 32px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.mc-sidebar .brand {
+  padding: 0 28px 28px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 20px;
+}
+.mc-sidebar .brand .mark {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  font-style: italic;
+  color: var(--ink);
+}
+.mc-sidebar .brand .mark .glyph {
+  display: inline-block;
+  transform: translateY(2px);
+  margin-right: 6px;
+  color: var(--accent);
+  font-style: normal;
+}
+.mc-sidebar .brand .sub {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+  margin-left: 30px;
+}
+
+.mc-nav { display: flex; flex-direction: column; gap: 4px; padding: 0 16px; }
+
+.mc-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-family: var(--ui);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+.mc-nav-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.mc-nav-item.active {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+  box-shadow: var(--shadow-sm);
+  font-weight: 600;
+}
+.mc-nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 3px;
+  height: 20px;
+  background: linear-gradient(180deg, var(--accent-light), var(--accent));
+  border-radius: 0 3px 3px 0;
+  margin-left: -17px;
+}
+.mc-nav-item .mc-emoji { font-size: 16px; width: 20px; text-align: center; }
+
+.mc-sidebar-foot {
+  margin-top: 28px;
+  padding: 20px 28px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 2.2;
+}
+
+/* ═══ Main content ════════════════════════════════════════ */
+.mc-main {
+  padding: 48px 56px;
+  max-width: 1200px;
+  position: relative;
+  z-index: 1;
+}
+
+.mc-topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 40px;
+}
+.mc-topbar h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.mc-topbar .mc-subtitle {
+  margin: 8px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.mc-topbar-right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ═══ Pills ═══════════════════════════════════════════════ */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.6);
+}
+.pill .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 6px var(--good);
+}
+.pill .dot.mute { background: var(--muted); box-shadow: none; }
+
+/* ═══ Cards with warm shadows ═════════════════════════════ */
+.mc-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.mc-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.mc-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-light), var(--gold), var(--sage-light));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.mc-card:hover {
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  transform: translateY(-2px);
+}
+.mc-card:hover::before { opacity: 1; }
+.mc-card .mc-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.mc-card .mc-value {
+  font-family: var(--display);
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.mc-card .mc-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* ═══ Section heads ══════════════════════════════════════ */
+.mc-section { margin-bottom: 44px; }
+.mc-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.mc-section-head h2 {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.mc-section-head .num {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  margin-right: 10px;
+}
+.mc-section-head .right {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* ═══ Panels ════════════════════════════════════════════ */
+.mc-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 8px 28px;
+  box-shadow: var(--shadow-sm);
+}
+.mc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--ui);
+  font-size: 14px;
+}
+.mc-row:last-child { border-bottom: none; }
+.mc-row .mc-key {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.mc-row .mc-val {
+  font-family: var(--ui);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+/* ═══ Progress bar ══════════════════════════════════════ */
+.mc-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--surface-2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 12px 0 8px;
+}
+.mc-bar .mc-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sage), var(--gold), var(--accent-light));
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+
+/* ═══ Tags ══════════════════════════════════════════════ */
+.mc-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+.mc-tag.active { background: rgba(107, 158, 122, 0.12); color: var(--good); }
+.mc-tag.dormant { background: rgba(154, 139, 127, 0.12); color: var(--muted); }
+.mc-tag.blocked { background: rgba(212, 115, 107, 0.12); color: var(--hot); }
+.mc-tag.pending { background: rgba(212, 165, 116, 0.12); color: var(--wait); }
+
+/* ═══ Horizon — warm sunset version ════════════════════ */
+.horizon {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 180px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+.horizon svg { width: 100%; height: 100%; display: block; }
+.horizon .wave1 { animation: drift 22s ease-in-out infinite alternate; }
+.horizon .wave2 { animation: drift 31s ease-in-out infinite alternate-reverse; }
+@keyframes drift {
+  from { transform: translateX(-12px); }
+  to   { transform: translateX(12px); }
+}
+
+/* ═══ Stat Ring (SVG circular progress) ════════════════ */
+.stat-ring {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.stat-ring svg { transform: rotate(-90deg); }
+.stat-ring .ring-bg { stroke: var(--surface-2); }
+.stat-ring .ring-fill {
+  stroke: var(--accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease;
+}
+.stat-ring .ring-label {
+  position: absolute;
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ═══ 2D Office Floor Plan ═════════════════════════════ */
+.floor-plan {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.floor-plan-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(244, 221, 212, 0.4), transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(212, 165, 116, 0.1), transparent 50%);
+  pointer-events: none;
+}
+
+.room {
+  position: absolute;
+  border: 2px solid var(--line-strong);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(4px);
+  transition: all 0.25s;
+}
+.room:hover {
+  border-color: var(--accent-light);
+  box-shadow: var(--shadow-glow);
+  background: rgba(255, 255, 255, 0.7);
+}
+.room .room-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  position: absolute;
+  top: 6px;
+  left: 8px;
+}
+.room .avatar {
+  font-size: 28px;
+  filter: drop-shadow(0 2px 4px rgba(45, 32, 24, 0.1));
+}
+.room .avatar-name {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+.room .avatar-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+.room .avatar-status.active { background: var(--good); box-shadow: 0 0 6px var(--good); }
+.room .avatar-status.dormant { background: var(--dim); }
+
+/* ═══ Footer ═══════════════════════════════════════════ */
+.mc-foot {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ═══ Responsive ══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .mc-layout { grid-template-columns: 1fr; }
+  .mc-sidebar { position: relative; height: auto; }
+  .mc-main { padding: 24px; }
+  .mc-topbar h1 { font-size: 28px; }
+  .mc-cards { grid-template-columns: 1fr 1fr; }
+}
+
+/* ═══ Hero headline ═══════════════════════════════════ */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.headline em {
+  color: var(--accent);
+  font-style: italic;
+}

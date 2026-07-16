@@ -1,0 +1,437 @@
+{
+  "generated_at": "2026-07-16T17:55:53.820142+00:00",
+  "source": "mission-control data snapshot - 2026-07-16",
+  "summary": {
+    "fleet_active_jobs": 9,
+    "cloudflare_deployments": 0,
+    "youtube_transcripts": 1,
+    "shared_brain_entries": 5,
+    "cost_incident_amount_usd": 267.7,
+    "cost_incident_resolved": true
+  },
+  "dashboard": {
+    "pipeline_state": {
+      "last_run": "2026-07-16T16:01:00.216625+00:00",
+      "cycle": {
+        "status": "ok",
+        "channels_processed": 6,
+        "new_videos_found": 0,
+        "transcripts_written": 0,
+        "already_processed": 0,
+        "no_transcript": 0,
+        "duration_sec": 3.5
+      }
+    },
+    "launchd_jobs": [
+      {
+        "pid": "834",
+        "status": "0",
+        "label": "ai.hermes.dashboard",
+        "active": true
+      },
+      {
+        "pid": "30776",
+        "status": "0",
+        "label": "application.com.nousresearch.hermes.106556927.106556932",
+        "active": true
+      },
+      {
+        "pid": "19038",
+        "status": "-15",
+        "label": "ai.hermes.gateway-paladinknox",
+        "active": true
+      },
+      {
+        "pid": "852",
+        "status": "0",
+        "label": "com.hermes.oc-webhook-receiver",
+        "active": true
+      },
+      {
+        "pid": "836",
+        "status": "0",
+        "label": "ai.hermes.glm-bridge-watch",
+        "active": true
+      },
+      {
+        "pid": "-",
+        "status": "0",
+        "label": "ai.calypso.watchdog",
+        "active": false
+      },
+      {
+        "pid": "854",
+        "status": "0",
+        "label": "ai.openclaw.node",
+        "active": true
+      },
+      {
+        "pid": "-",
+        "status": "0",
+        "label": "ai.hermes.vault-backup",
+        "active": false
+      },
+      {
+        "pid": "-",
+        "status": "0",
+        "label": "ai.calypso.youtube-pipeline",
+        "active": false
+      },
+      {
+        "pid": "833",
+        "status": "0",
+        "label": "ai.openclaw.gateway",
+        "active": true
+      },
+      {
+        "pid": "841",
+        "status": "0",
+        "label": "com.openclaw.zai-proxy",
+        "active": true
+      },
+      {
+        "pid": "26896",
+        "status": "0",
+        "label": "application.com.nikita.calypso.107524381.107524691",
+        "active": true
+      },
+      {
+        "pid": "-",
+        "status": "0",
+        "label": "ai.hermes.vault-sync",
+        "active": false
+      },
+      {
+        "pid": "-",
+        "status": "0",
+        "label": "ai.hermes.vault-health",
+        "active": false
+      }
+    ],
+    "cloudflare_deployments": []
+  },
+  "calypso": {
+    "channels": [
+      {
+        "id": "UCNZEktrsM5oJZ-MK4jKPMOQ",
+        "name": "The Next New Thing",
+        "label": "channel 1"
+      },
+      {
+        "id": "UCzGcYErpBX4ldvv0l7MWLfw",
+        "name": "Samin Yasar",
+        "label": "channel 2"
+      },
+      {
+        "id": "UC5deKm1RRbcoUIuLuSCFprg",
+        "name": "Jordan Welch",
+        "label": "channel 3"
+      },
+      {
+        "id": "UCuvjQYKukKjVyhSVxQibgOw",
+        "name": "The Calum Johnson Show",
+        "label": "channel 4"
+      },
+      {
+        "id": "UCfQNB91qRP_5ILeu_S_bSkg",
+        "name": "Alex Finn",
+        "label": "channel 5"
+      },
+      {
+        "id": "UCFMCRRkgaKEt6GLl1ThT5JQ",
+        "name": "The Anatomy of a Dream",
+        "label": "channel 6"
+      }
+    ],
+    "transcripts": [
+      {
+        "title": "One repo. One install. A much smarter AI workflow.",
+        "channel": "Samin Yasar",
+        "video_id": "ydMirxiqOI4",
+        "published": "2026-07-16T11:04:08+00:00",
+        "path": "/Users/nikita/Movies/HermesMemory/Research/YouTube/Samin-Yasar/2026-07-16_ydMirxiqOI4_transcript.md"
+      }
+    ],
+    "pipeline_heartbeat": {
+      "last_run": "2026-07-16T16:01:00.216625+00:00",
+      "cycle": {
+        "status": "ok",
+        "channels_processed": 6,
+        "new_videos_found": 0,
+        "transcripts_written": 0,
+        "already_processed": 0,
+        "no_transcript": 0,
+        "duration_sec": 3.5
+      }
+    },
+    "principles": [
+      {
+        "concept": "Learning pipeline is live",
+        "book": "Calypso Factory",
+        "description": "6 YouTube channels monitored; transcripts written to vault."
+      },
+      {
+        "concept": "Cloudflare Pages deploy",
+        "book": "Olympia Mission Control",
+        "description": "Static export, manual wrangler only. No GitHub integration."
+      },
+      {
+        "concept": "Watchdog is watching",
+        "book": "Hermes Guardrails",
+        "description": "Heartbeat file checks every 1h; Telegram alerts on stale pipeline."
+      },
+      {
+        "concept": "No more Vercel bills",
+        "book": "Olympia Mission Control",
+        "description": "All misconfigured Vercel projects deleted. Audit clean."
+      },
+      {
+        "concept": "Prime Directive",
+        "book": "Nikita Operating System",
+        "description": "Ship first, prune on cue. Never claim done without proof from disk."
+      }
+    ],
+    "stats": {
+      "channels_total": 6,
+      "channels_with_transcripts": 1,
+      "total_transcripts": 1
+    }
+  },
+  "hermes": {
+    "shared_brain": [
+      {
+        "file": "bot_status.json",
+        "bot": "?",
+        "category": "?",
+        "preview": "",
+        "tags": [],
+        "mtime": "2026-07-16T17:55:48.565768+00:00"
+      },
+      {
+        "file": "fleet_health.json",
+        "bot": "?",
+        "category": "?",
+        "preview": "",
+        "tags": [],
+        "mtime": "2026-07-16T17:54:48.612275+00:00"
+      },
+      {
+        "file": "shared_memory.json",
+        "bot": "?",
+        "category": "?",
+        "preview": "",
+        "tags": [],
+        "mtime": "2026-07-15T15:20:13.088130+00:00"
+      },
+      {
+        "file": "memory_layers.json",
+        "bot": "?",
+        "category": "?",
+        "preview": "",
+        "tags": [],
+        "mtime": "2026-07-13T04:03:47.535937+00:00"
+      },
+      {
+        "file": "recent_activity.json",
+        "bot": "?",
+        "category": "?",
+        "preview": "",
+        "tags": [],
+        "mtime": "2026-07-13T04:03:47.519006+00:00"
+      }
+    ],
+    "cost_status": {
+      "vercel_projects_deleted": [
+        "bow-and-brunch-site",
+        "calypso-bot"
+      ],
+      "vercel_projects_surviving": 11,
+      "cost_incident_date": "2026-07-16",
+      "cost_incident_amount_usd": 267.7,
+      "cost_incident_root_cause": "tight commit loop on dead calypso-state GitHub repo",
+      "cost_incident_resolved": true,
+      "cost_guard_active": [
+        "Vercel link deleted on all surviving projects",
+        "calypso-state GitHub repo archived",
+        "Cloudflare Pages projects have NO GitHub integration",
+        "Manual wrangler deploy only"
+      ]
+    },
+    "incident_timeline": [
+      {
+        "date": "2026-07-15",
+        "event": "Calypso YouTube pipeline claimed-shipped but files missing on disk. No transcript ever landed in vault."
+      },
+      {
+        "date": "2026-07-16 04:54-05:14 UTC",
+        "event": "calypso-state GitHub repo commit-bomb loop: 12 commits in 20 minutes triggered 25 Vercel builds."
+      },
+      {
+        "date": "2026-07-16",
+        "event": "Vercel bill: $267.70 overage. $234 from Build CPU minutes alone."
+      },
+      {
+        "date": "2026-07-16",
+        "event": "Fixes: deleted broken Vercel projects, archived GitHub repo, installed yt-dlp, rebuilt pipeline script, deployed calypso-bot to Cloudflare Pages."
+      },
+      {
+        "date": "2026-07-16",
+        "event": "Watchdog live. Pipeline + alerts operational. Cost-bomb recurrence impossible."
+      }
+    ],
+    "peer_cards": [
+      {
+        "name": "Nikita",
+        "role": "CEO / Owner",
+        "style": "Ship first, prune on cue. Plain English. ALL CAPS = blocking."
+      },
+      {
+        "name": "Athena (PaladinKnox)",
+        "role": "Override voice on Telegram",
+        "style": "Concise, terse, action-first. CEO mode."
+      },
+      {
+        "name": "Hermes",
+        "role": "Operator on Mac",
+        "style": "Hermes-Agent runtime, MCP servers, cron jobs."
+      },
+      {
+        "name": "Calypso",
+        "role": "Marketing research",
+        "style": "YouTube learning pipeline, principle extraction."
+      }
+    ]
+  },
+  "office": {
+    "fleet": [
+      {
+        "id": "nikita",
+        "name": "Nikita (CEO)",
+        "emoji": "\ud83d\udc51",
+        "tier": 1,
+        "role": "Owner",
+        "status": "active",
+        "location": "MacBook Air"
+      },
+      {
+        "id": "athena",
+        "name": "Athena",
+        "emoji": "\u2728",
+        "tier": 2,
+        "role": "Telegram override voice",
+        "status": "active",
+        "location": "Telegram DM"
+      },
+      {
+        "id": "hermes",
+        "name": "Hermes",
+        "emoji": "\ud83d\udc41\ufe0f",
+        "tier": 3,
+        "role": "Operator",
+        "status": "active",
+        "location": "~/.hermes/hermes-agent/"
+      },
+      {
+        "id": "calypso",
+        "name": "Calypso",
+        "emoji": "\ud83c\udf0a",
+        "tier": 4,
+        "role": "Marketing research",
+        "status": "active",
+        "location": "calypso-bot.pages.dev (static)"
+      },
+      {
+        "id": "persephone",
+        "name": "Persephone",
+        "emoji": "\ud83c\udf38",
+        "tier": 4,
+        "role": "Reserved",
+        "status": "dormant",
+        "location": "not deployed"
+      },
+      {
+        "id": "artemis",
+        "name": "Artemis",
+        "emoji": "\ud83c\udff9",
+        "tier": 4,
+        "role": "Reserved",
+        "status": "dormant",
+        "location": "not deployed"
+      },
+      {
+        "id": "hestia",
+        "name": "Hestia",
+        "emoji": "\ud83d\udd25",
+        "tier": 4,
+        "role": "Reserved",
+        "status": "dormant",
+        "location": "not deployed"
+      },
+      {
+        "id": "youtube-pipeline",
+        "name": "YouTube Pipeline",
+        "emoji": "\ud83d\udcfa",
+        "tier": 4,
+        "role": "Calypso learning cron",
+        "status": "active",
+        "location": "launchd ai.calypso.youtube-pipeline"
+      },
+      {
+        "id": "watchdog",
+        "name": "Watchdog",
+        "emoji": "\ud83d\udc15",
+        "tier": 4,
+        "role": "Heartbeat alerts",
+        "status": "active",
+        "location": "launchd ai.calypso.watchdog"
+      }
+    ],
+    "cost_status": {
+      "vercel_projects_deleted": [
+        "bow-and-brunch-site",
+        "calypso-bot"
+      ],
+      "vercel_projects_surviving": 11,
+      "cost_incident_date": "2026-07-16",
+      "cost_incident_amount_usd": 267.7,
+      "cost_incident_root_cause": "tight commit loop on dead calypso-state GitHub repo",
+      "cost_incident_resolved": true,
+      "cost_guard_active": [
+        "Vercel link deleted on all surviving projects",
+        "calypso-state GitHub repo archived",
+        "Cloudflare Pages projects have NO GitHub integration",
+        "Manual wrangler deploy only"
+      ]
+    },
+    "cloudflare_projects": [],
+    "pending_approvals": [
+      {
+        "item": "Add OpenAI API key for backup",
+        "status": "pending",
+        "blocker": "Cost lock - no API spend without explicit OK"
+      },
+      {
+        "item": "Restore calypso-bot API routes",
+        "status": "blocked",
+        "blocker": "Next.js 16 not supported by @cloudflare/next-on-pages"
+      },
+      {
+        "item": "Deploy bow-and-brunch-site",
+        "status": "blocked",
+        "blocker": "Source has no package.json"
+      },
+      {
+        "item": "Deploy hermes-mobile",
+        "status": "pending",
+        "blocker": "User decision needed"
+      }
+    ]
+  },
+  "vault_links": {
+    "youtube_vault": "file:///Users/nikita/Movies/HermesMemory/Research/YouTube/",
+    "shared_brain": "~/.hermes/shared/",
+    "people": "file:///Users/nikita/Movies/HermesMemory/40-People/",
+    "decisions": "file:///Users/nikita/Movies/HermesMemory/20-Decisions/",
+    "calypso_bot": "https://calypso-bot.pages.dev"
+  }
+}

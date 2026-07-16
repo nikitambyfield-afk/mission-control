@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: olympia-mission-control
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: '20'
+      - key: CLOUDFLARE_API_TOKEN
+        sync: false
+        value: cfat_change_me_in_render_dashboard
+      - key: CLOUDFLARE_ACCOUNT_ID
+        value: '507046e4877f6dc8ac23ff65f787b93d'
+    autoDeploy: false
