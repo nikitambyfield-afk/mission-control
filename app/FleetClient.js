@@ -128,7 +128,7 @@ export default function FleetClient({ data: initialData }) {
     <Shell
       summary={{ ...s, fleet_active_jobs: activeAgents, generated_at: data?.generated_at }}
       title="Command Center"
-      subtitle={`Olympia neural operations · synchronized ${lastRefresh ? lastRefresh.toLocaleTimeString() : 'connecting…'}`}
+      subtitle="Olympia neural operations · secure telemetry online"
     >
       <section className="command-deck" aria-label="Olympia command interface">
         <div className="command-orb">O</div>
