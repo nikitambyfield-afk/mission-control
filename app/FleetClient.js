@@ -61,7 +61,8 @@ export default function FleetClient({ data: initialData }) {
   const refresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      const telemetryUrl = process.env.NEXT_PUBLIC_OLYMPIA_TELEMETRY_URL || '/api/fleet';
+      const telemetryUrl = process.env.NEXT_PUBLIC_OLYMPIA_TELEMETRY_URL
+        || 'https://olympia-telemetry.olympia-mission-control.workers.dev/v1/telemetry';
       const response = await fetch(telemetryUrl, { cache: 'no-store' });
       if (response.ok) {
         const live = await response.json();
