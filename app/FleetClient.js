@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Shell from './Shell';
+import MissionBoard from './MissionBoard';
 
 const COMMANDS = [
   { match: ['unhealthy', 'risk', 'watchdog'], label: 'Scan fleet risks', result: 'Watchdog scan complete: pipeline heartbeat is the only elevated signal.' },
@@ -60,7 +61,8 @@ export default function FleetClient({ data: initialData }) {
   const refresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      const response = await fetch('/api/fleet', { cache: 'no-store' });
+      const telemetryUrl = process.env.NEXT_PUBLIC_OLYMPIA_TELEMETRY_URL || '/api/fleet';
+      const response = await fetch(telemetryUrl, { cache: 'no-store' });
       if (response.ok) {
         const live = await response.json();
         setData((previous) => ({
@@ -78,6 +80,7 @@ export default function FleetClient({ data: initialData }) {
   }, []);
 
   useEffect(() => {
+    refresh();
     const timer = setInterval(refresh, 60_000);
     return () => clearInterval(timer);
   }, [refresh]);
@@ -160,6 +163,8 @@ export default function FleetClient({ data: initialData }) {
         <div><span>SPEND TARGET</span><strong className="pink">$0</strong></div>
         <button className="sync-button" onClick={refresh} disabled={refreshing}>{refreshing ? 'SYNCING…' : 'SYNC NOW'}</button>
       </div>
+
+      <MissionBoard data={data} fleet={fleet} approvals={approvals} />
 
       <section className="future-grid">
         <div className="neural-map panel-dark">

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NAV = [
-  { href: '/', label: 'Dashboard', emoji: '⚡' },
+  { href: '/', label: 'Mission Board', emoji: '◫' },
   { href: '/calypso/', label: 'Calypso', emoji: '🌊' },
   { href: '/hermes/', label: 'Hermes', emoji: '🧠' },
   { href: '/office/', label: '2D Office', emoji: '📐' },

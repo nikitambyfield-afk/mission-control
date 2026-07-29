@@ -1,0 +1,11 @@
+name = "olympia-telemetry"
+main = "src/index.js"
+compatibility_date = "2026-07-29"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "olympia-telemetry"
+database_id = "REPLACE_AFTER_D1_CREATE"
+
+[vars]
+ALLOWED_ORIGIN = "https://mission-control-roan-five.vercel.app"
