@@ -128,11 +128,13 @@ export default function MissionBoard({ data, fleet, approvals }) {
   useEffect(() => {
     if (data?.telemetry_mode !== 'live') return;
     setCards((current) => {
-      if (!current.some((card) => card.source === 'snapshot')) return current;
+      const needsRefresh = current.some((card) => card.source === 'snapshot')
+        || (data?.hermes && !current.some((card) => card.id === 'signal-hermes'));
+      if (!needsRefresh) return current;
       const liveCards = seed.filter((card) => card.source === 'live');
-      return [...liveCards, ...current.filter((card) => card.source !== 'snapshot')].slice(0, CARD_LIMIT);
+      return [...liveCards, ...current.filter((card) => !['snapshot', 'live'].includes(card.source))].slice(0, CARD_LIMIT);
     });
-  }, [data?.telemetry_mode, seed]);
+  }, [data?.telemetry_mode, data?.hermes, seed]);
 
   function moveCard(cardId, column) {
     setCards((current) => current.map((card) => (
