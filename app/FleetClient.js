@@ -105,6 +105,13 @@ export default function FleetClient({ data: initialData }) {
   const pipelineHealthy = s.pipeline_status === 'ok' || data?.pipeline_heartbeat?.cycle?.status === 'ok';
 
   const signals = useMemo(() => [
+    ...(data?.hermes ? [{
+      level: data.hermes.overall === 'healthy' ? 'good' : 'warn',
+      title: data.hermes.connected ? `Hermes ${data.hermes.overall}` : 'Hermes unavailable',
+      detail: data.hermes.connected
+        ? `v${data.hermes.version} · gateway ${data.hermes.gateway_state} · ${data.hermes.active_sessions} active sessions`
+        : 'The local read-only Hermes status channel is unavailable.',
+    }] : []),
     {
       level: pipelineHealthy ? 'good' : 'warn',
       title: pipelineHealthy ? 'Pipeline nominal' : 'Pipeline heartbeat stale',
@@ -120,7 +127,7 @@ export default function FleetClient({ data: initialData }) {
       title: liveJobs.length ? `${liveJobs.length} runtime records available` : 'Local runtime is offline',
       detail: liveJobs.length ? 'Using the most recent verified telemetry snapshot.' : 'Connect a secure telemetry relay for true live Mac status.',
     },
-  ], [pipelineHealthy, liveJobs.length]);
+  ], [pipelineHealthy, liveJobs.length, data?.hermes]);
 
   function runCommand(event) {
     event.preventDefault();
@@ -165,7 +172,12 @@ export default function FleetClient({ data: initialData }) {
 
       <div className="telemetry-strip">
         <div><span>ACTIVE INTELLIGENCE</span><strong>{verifiedActive}/{verifiedTotal}</strong></div>
-        <div><span>RESEARCH MEMORY</span><strong>{s.youtube_transcripts ?? data?.transcripts?.length ?? 0}</strong></div>
+        <div>
+          <span>{data?.hermes ? 'HERMES AGENT' : 'RESEARCH MEMORY'}</span>
+          <strong className={data?.hermes?.overall === 'healthy' ? '' : 'pink'}>
+            {data?.hermes ? data.hermes.overall?.toUpperCase() : (s.youtube_transcripts ?? data?.transcripts?.length ?? 0)}
+          </strong>
+        </div>
         <div><span>APPROVAL QUEUE</span><strong>{approvals.filter((a, i) => !approvalStates[i]).length}</strong></div>
         <div><span>SPEND TARGET</span><strong className="pink">$0</strong></div>
         <button className="sync-button" onClick={refresh} disabled={refreshing}>{refreshing ? 'SYNCING…' : 'SYNC NOW'}</button>
@@ -203,7 +215,7 @@ export default function FleetClient({ data: initialData }) {
         <div className="watchdog-panel panel-dark">
           <div className="future-heading">
             <div><span>02</span><h2>Predictive Watchdog</h2></div>
-            <small>3 SIGNALS</small>
+            <small>{signals.length} SIGNALS</small>
           </div>
           <div className="signal-list">
             {signals.map((signal) => (

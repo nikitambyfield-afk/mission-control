@@ -34,6 +34,24 @@ function seedCards(data, fleet, approvals) {
     proof: telemetryMode === 'live' ? '/api/fleet' : null,
   });
 
+  if (data?.hermes) {
+    cards.push({
+      id: 'signal-hermes',
+      title: `Hermes agent · ${data.hermes.overall}`,
+      detail: data.hermes.connected
+        ? `v${data.hermes.version} · gateway ${data.hermes.gateway_state} · ${data.hermes.active_sessions} active sessions`
+        : 'Hermes status channel is unavailable.',
+      column: data.hermes.overall === 'healthy' ? 'running' : 'blocked',
+      agent: 'Hermes',
+      emoji: '👁️',
+      priority: data.hermes.overall === 'healthy' ? 'medium' : 'high',
+      cost: '$0',
+      source: telemetryMode,
+      evidenceAt: data.hermes.checked_at || generatedAt,
+      proof: telemetryMode === 'live' ? 'Hermes /api/status' : null,
+    });
+  }
+
   approvals.forEach((approval, index) => {
     cards.push({
       id: `approval-${index}`,

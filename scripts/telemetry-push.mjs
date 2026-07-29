@@ -36,8 +36,53 @@ async function heartbeat() {
   }
 }
 
+function hermesPort() {
+  try {
+    const pids = execFileSync('pgrep', ['-f', 'hermes_cli.main serve'], { encoding: 'utf8', timeout: 3000 })
+      .trim()
+      .split('\n')
+      .filter(Boolean);
+    for (const pid of pids) {
+      const output = execFileSync(
+        'lsof',
+        ['-nP', '-a', '-p', pid, '-iTCP', '-sTCP:LISTEN'],
+        { encoding: 'utf8', timeout: 3000 },
+      );
+      const match = output.match(/127\.0\.0\.1:(\d+)\s+\(LISTEN\)/);
+      if (match) return Number(match[1]);
+    }
+  } catch {}
+  return null;
+}
+
+async function hermesStatus() {
+  const port = hermesPort();
+  if (!port) return { connected: false, overall: 'unavailable' };
+  try {
+    const response = await fetch(`http://127.0.0.1:${port}/api/status`, {
+      signal: AbortSignal.timeout(3000),
+    });
+    if (!response.ok) return { connected: false, overall: 'unavailable' };
+    const status = await response.json();
+    return {
+      connected: true,
+      version: status.version || null,
+      overall: status.overall || 'unknown',
+      gateway_running: Boolean(status.gateway_running),
+      gateway_state: status.gateway_state || 'unknown',
+      gateway_busy: Boolean(status.gateway_busy),
+      active_agents: Number(status.active_agents || 0),
+      active_sessions: Number(status.active_sessions || 0),
+      checked_at: new Date().toISOString(),
+    };
+  } catch {
+    return { connected: false, overall: 'unavailable' };
+  }
+}
+
 const jobs = launchJobs();
 const pipeline = await heartbeat();
+const hermes = await hermesStatus();
 const payload = {
   schema_version: 1,
   generated_at: new Date().toISOString(),
@@ -53,6 +98,7 @@ const payload = {
   missions: [],
   approvals: [],
   pipeline_heartbeat: pipeline,
+  hermes,
 };
 
 const body = JSON.stringify(payload);
