@@ -284,8 +284,32 @@ export default function FleetClient({ data: initialData }) {
       </section>
 
       <section className="relay-banner">
-        <div><span className="eyebrow">Next infrastructure step</span><h2>Connect the secure Mac telemetry relay</h2><p>That turns snapshot status into true real-time fleet health without exposing your machine publicly.</p></div>
-        <Link href="/api/health">Inspect health endpoint ↗</Link>
+        {data?.telemetry_mode === 'live' ? (
+          <>
+            <div>
+              <span className="eyebrow">Telemetry relay connected</span>
+              <h2>
+                {s.pipeline_status === 'ok'
+                  ? 'Live data is flowing normally'
+                  : `Next action: investigate pipeline ${s.pipeline_status?.toUpperCase() || 'failure'}`}
+              </h2>
+              <p>
+                Signed Mac telemetry is reporting live. Infrastructure is online;
+                the pipeline condition above is the current operational priority.
+              </p>
+            </div>
+            <Link href="/calypso/">Inspect pipeline ↗</Link>
+          </>
+        ) : (
+          <>
+            <div>
+              <span className="eyebrow">Infrastructure action required</span>
+              <h2>Connect the secure Mac telemetry relay</h2>
+              <p>Cloud data is currently a snapshot and must not be treated as live.</p>
+            </div>
+            <Link href="/api/health">Inspect health endpoint ↗</Link>
+          </>
+        )}
       </section>
 
       {selectedAgent && (
