@@ -59,17 +59,33 @@ async function hermesStatus() {
   const port = hermesPort();
   if (!port) return { connected: false, overall: 'unavailable' };
   try {
+    let launchGatewayRunning = false;
+    let photonRunning = false;
+    try {
+      execFileSync('launchctl', ['list', 'ai.hermes.gateway'], { stdio: 'ignore', timeout: 3000 });
+      launchGatewayRunning = true;
+    } catch {}
+    try {
+      const photon = execFileSync(
+        'lsof',
+        ['-nP', '-iTCP:8789', '-sTCP:LISTEN'],
+        { encoding: 'utf8', timeout: 3000 },
+      );
+      photonRunning = photon.includes('127.0.0.1:8789');
+    } catch {}
     const response = await fetch(`http://127.0.0.1:${port}/api/status`, {
       signal: AbortSignal.timeout(3000),
     });
     if (!response.ok) return { connected: false, overall: 'unavailable' };
     const status = await response.json();
+    const healthy = launchGatewayRunning && photonRunning;
     return {
       connected: true,
       version: status.version || null,
-      overall: status.overall || 'unknown',
-      gateway_running: Boolean(status.gateway_running),
-      gateway_state: status.gateway_state || 'unknown',
+      overall: healthy ? 'healthy' : (status.overall || 'degraded'),
+      gateway_running: launchGatewayRunning || Boolean(status.gateway_running),
+      gateway_state: launchGatewayRunning ? 'running' : (status.gateway_state || 'unknown'),
+      photon_running: photonRunning,
       gateway_busy: Boolean(status.gateway_busy),
       active_agents: Number(status.active_agents || 0),
       active_sessions: Number(status.active_sessions || 0),
