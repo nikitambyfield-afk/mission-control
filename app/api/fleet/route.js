@@ -15,7 +15,7 @@ function getLaunchdJobs() {
   try {
     const out = execSync('launchctl list', { encoding: 'utf8', timeout: 5 });
     const jobs = [];
-    for (const line of out.splitlines()) {
+    for (const line of out.split('\n')) {
       const lower = line.toLowerCase();
       if (!['calypso', 'hermes', 'openclaw'].some((k) => lower.includes(k))) continue;
       const parts = line.split('\t');

@@ -21,7 +21,7 @@ async function getFleetData() {
   try {
     const { execSync } = await import('node:child_process');
     const out = execSync('launchctl list', { encoding: 'utf8', timeout: 5 });
-    for (const line of out.splitlines()) {
+    for (const line of out.split('\n')) {
       const lower = line.toLowerCase();
       if (!['calypso', 'hermes', 'openclaw'].some((k) => lower.includes(k))) continue;
       const parts = line.split('\t');
@@ -78,21 +78,36 @@ async function getFleetData() {
     if (ch) channelList = JSON.parse(ch).channels || [];
   } catch {}
 
+  let snapshot = null;
+  try {
+    snapshot = JSON.parse(await fs.readFile(path.join(process.cwd(), 'public/mission-data.json'), 'utf8'));
+  } catch {}
+
+  const snapshotJobs = snapshot?.dashboard?.launchd_jobs || [];
+  const effectiveJobs = launchd.length ? launchd : snapshotJobs;
+  const snapshotHeartbeat = snapshot?.calypso?.pipeline_heartbeat || snapshot?.dashboard?.pipeline_state || null;
+  const effectiveHeartbeat = heartbeat || snapshotHeartbeat;
+  const snapshotChannels = snapshot?.calypso?.channels || [];
+  const effectiveChannels = channelList.length ? channelList : snapshotChannels;
+  const snapshotTranscripts = snapshot?.calypso?.transcripts || [];
+  const effectiveTranscripts = transcripts.length ? transcripts : snapshotTranscripts;
+
   return {
     generated_at: new Date().toISOString(),
+    telemetry_mode: launchd.length ? 'live' : 'snapshot',
     summary: {
-      fleet_active_jobs: launchd.filter((j) => j.active).length,
-      fleet_total_jobs: launchd.length,
-      youtube_transcripts: transcripts.length,
-      youtube_channels_total: channelList.length,
-      channels_with_transcripts: new Set(transcripts.map((t) => t.channel)).size,
-      pipeline_status: heartbeat?.cycle?.status || 'unknown',
-      pipeline_last_run: heartbeat?.last_run || null,
+      fleet_active_jobs: effectiveJobs.filter((j) => j.active).length,
+      fleet_total_jobs: effectiveJobs.length,
+      youtube_transcripts: effectiveTranscripts.length,
+      youtube_channels_total: effectiveChannels.length,
+      channels_with_transcripts: new Set(effectiveTranscripts.map((t) => t.channel)).size,
+      pipeline_status: effectiveHeartbeat?.cycle?.status || 'unknown',
+      pipeline_last_run: effectiveHeartbeat?.last_run || null,
     },
-    launchd,
-    transcripts,
-    channels: channelList,
-    pipeline_heartbeat: heartbeat,
+    launchd: effectiveJobs,
+    transcripts: effectiveTranscripts,
+    channels: effectiveChannels,
+    pipeline_heartbeat: effectiveHeartbeat,
     fleet: [
       { id: 'nikita', name: 'Nikita (CEO)', emoji: '👑', tier: 1, role: 'Owner', status: 'active', location: 'MacBook Air' },
       { id: 'athena', name: 'Athena', emoji: '✨', tier: 2, role: 'Telegram override voice', status: 'active', location: 'Telegram DM' },
