@@ -129,7 +129,10 @@ export default function MissionBoard({ data, fleet, approvals }) {
     if (data?.telemetry_mode !== 'live') return;
     setCards((current) => {
       const needsRefresh = current.some((card) => card.source === 'snapshot')
-        || (data?.hermes && !current.some((card) => card.id === 'signal-hermes'));
+        || (data?.hermes && !current.some((card) => card.id === 'signal-hermes'))
+        || (data?.hermes && current.some((card) => (
+          card.id === 'signal-hermes' && card.title !== `Hermes agent · ${data.hermes.overall}`
+        )));
       if (!needsRefresh) return current;
       const liveCards = seed.filter((card) => card.source === 'live');
       return [...liveCards, ...current.filter((card) => !['snapshot', 'live'].includes(card.source))].slice(0, CARD_LIMIT);
