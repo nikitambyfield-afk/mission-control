@@ -96,6 +96,12 @@ export default function FleetClient({ data: initialData }) {
   const snapshotJobs = data?.dashboard?.launchd_jobs || [];
   const liveJobs = data?.launchd?.length ? data.launchd : snapshotJobs;
   const activeAgents = fleet.filter((agent) => agent.status === 'active').length;
+  const verifiedActive = data?.telemetry_mode === 'live'
+    ? (s.fleet_active_jobs ?? activeAgents)
+    : activeAgents;
+  const verifiedTotal = data?.telemetry_mode === 'live'
+    ? (s.fleet_total_jobs ?? fleet.length)
+    : fleet.length;
   const pipelineHealthy = s.pipeline_status === 'ok' || data?.pipeline_heartbeat?.cycle?.status === 'ok';
 
   const signals = useMemo(() => [
@@ -130,7 +136,7 @@ export default function FleetClient({ data: initialData }) {
 
   return (
     <Shell
-      summary={{ ...s, fleet_active_jobs: activeAgents, generated_at: data?.generated_at }}
+      summary={{ ...s, fleet_active_jobs: verifiedActive, generated_at: data?.generated_at }}
       title="Command Center"
       subtitle="Olympia neural operations · secure telemetry online"
     >
@@ -158,7 +164,7 @@ export default function FleetClient({ data: initialData }) {
       </section>
 
       <div className="telemetry-strip">
-        <div><span>ACTIVE INTELLIGENCE</span><strong>{activeAgents}/{fleet.length}</strong></div>
+        <div><span>ACTIVE INTELLIGENCE</span><strong>{verifiedActive}/{verifiedTotal}</strong></div>
         <div><span>RESEARCH MEMORY</span><strong>{s.youtube_transcripts ?? data?.transcripts?.length ?? 0}</strong></div>
         <div><span>APPROVAL QUEUE</span><strong>{approvals.filter((a, i) => !approvalStates[i]).length}</strong></div>
         <div><span>SPEND TARGET</span><strong className="pink">$0</strong></div>

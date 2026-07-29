@@ -107,6 +107,15 @@ export default function MissionBoard({ data, fleet, approvals }) {
     try { localStorage.setItem('olympia-kanban-v4', JSON.stringify(cards)); } catch {}
   }, [cards]);
 
+  useEffect(() => {
+    if (data?.telemetry_mode !== 'live') return;
+    setCards((current) => {
+      if (!current.some((card) => card.source === 'snapshot')) return current;
+      const liveCards = seed.filter((card) => card.source === 'live');
+      return [...liveCards, ...current.filter((card) => card.source !== 'snapshot')].slice(0, CARD_LIMIT);
+    });
+  }, [data?.telemetry_mode, seed]);
+
   function moveCard(cardId, column) {
     setCards((current) => current.map((card) => (
       card.id === cardId
